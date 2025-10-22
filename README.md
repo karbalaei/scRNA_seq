@@ -61,11 +61,11 @@ When using **cellranger mkfastq** (or the underlying Illumina software like bcl2
 
 *The Rule*: Never use adapter trimming flags (like --trim-adapters) or settings that instruct the software to remove adapter sequences. *The Reason*: For 10x data, the crucial Cell Barcode and UMI sequences are often found within the read structure, sometimes near where a typical sequencing adapter might be. Trimming them off will destroy the information Cell Ranger needs to assign reads to cells and count transcripts, which will make your downstream analysis useless!
 
-2- **Key Parameter: --barcode-mismatches (Index Mismatches)
+2- **Key Parameter: --barcode-mismatches (Index Mismatches)**
 
 *What it does*: This flag (or the equivalent setting in your sample sheet) specifies the number of mismatches allowed when matching the Sample Index sequence (the index that separates your pooled libraries) to the expected sequences. *The Default* : The default is usually 1 mismatch allowed.*Why it matters*: Allowing 1 mismatch is standard and increases the number of reads that can be successfully assigned to a sample, correcting for sequencing errors in the index read. However, increasing this past 1 is generally not recommended as it increases the risk of mis-assignment (reads being incorrectly assigned to the wrong sample).
 
-3- **The Sample Sheet: Your Real Command Center **
+3- **The Sample Sheet: Your Real Command Center**
 
 The most vital "flag" is actually the Sample Sheet (CSV file) you provide to mkfastq. This sheet is where you link the physical lane and sequencing index sequence to a Sample ID (e.g., "Patient_A" or "Treated_Sample"). This Sample ID is what Cell Ranger uses to name and organize your final files
 
