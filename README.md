@@ -1,12 +1,12 @@
 
-## 10x Genomics scRNA-seq ##
+# 10x Genomics scRNA-seq #
 
-### Understanding the 10x Genomics Workflow and Data: From Cells to Matrix
+## Understanding the 10x Genomics Workflow and Data: From Cells to Matrix
 
 The core idea of 10x Genomics is to capture thousands of individual cells and perform the sequencing preparation inside tiny oil droplets called **GEMs** (Gel Beads in Emulsion) . This process uses a specialized piece of hardware and reagents.
 The raw output from an Illumina sequencer is a set of **Binary Base Call (BCL) files**. The **Cell Ranger** software manages these BCL files through a critical initial step called **demultiplexing**. Here's how it works:
 
-**1. From BCL to FASTQ (Demultiplexing)**:
+### **1. From BCL to FASTQ (Demultiplexing)**:
 
 The BCL files are the dense, raw data, containing the base call and a quality score for every single cycle of the sequencing run. They aren't directly usable by most analysis tools.  
 To prepare them, two main things happen here:
@@ -17,7 +17,7 @@ To prepare them, two main things happen here:
 
 The Cell Ranger pipeline includes a function, **cellranger mkfastq** (which internally uses Illumina's *bcl2fastq* or *BCL Convert software*)
 
-**2. From FASTQ to the Count Matrix**
+#### **2. From FASTQ to the Count Matrix**
 
 Once the FASTQ files are generated, the main analysis pipeline takes over:
 
@@ -34,23 +34,23 @@ The final result is the Gene-Barcode Matrix (the massive spreadsheet we talked a
 So, in short, Cell Ranger's first job is to run a "BCL to FASTQ" conversion and sample separation, and its second (and bigger) job is to process those FASTQ files into the count matrix.
 The key to keeping track of which RNA molecule came from which cell are two special tags: **Barcodes** and **UMIs**.
 
-#### 1. Cell Barcodes (CBs): 
+1- **Cell Barcodes (CBs): 
 Think of the **Barcode** as the mailing address for the cell. Every GEM contains a unique, pre-attached Gel Bead with millions of copies of the same short DNA sequence. This unique sequence is the **Cell Barcode**. As the cell's RNA is captured and prepared for sequencing inside the GEM, this barcode is added to every single RNA molecule from that cell. This tells you which cell the RNA came from.
 
-#### 2. Unique Molecular Identifiers (UMIs): 
+2 ** Unique Molecular Identifiers (UMIs): 
 The **UMI** is like a serial number for a specific RNA molecule within a cell. It's a short, random sequence also added during the preparation. Why do we need it? When the RNA is amplified (copied many times) before sequencing, we need to know if we are seeing a measurement from the original RNA molecule or just a copy. By counting the unique **UMIs** associated with a gene in a cell, we get an accurate count of the *original RNA molecules*, preventing amplification biases from skewing the results.
 
 After sequencing, the proprietary 10x software, **Cell Ranger**, takes the raw data, uses the **Barcodes** to group reads by cell and the UMIs to count the original molecules, and produces the final output: the Gene-Barcode Matrix. This is a massive spreadsheet where:
 
-A-*** Rows are the Genes (e.g., Sox2, CD14).
-B-*** Columns are the Cells (identified by their Barcodes).
-C-*** The Values in the matrix are the UMI Counts (how many molecules of that gene were detected in that cell).
+A- *** Rows are the Genes (e.g., Sox2, CD14).
+B- *** Columns are the Cells (identified by their Barcodes).
+C- *** The Values in the matrix are the UMI Counts (how many molecules of that gene were detected in that cell).
 
 This matrix is the starting point for almost all downstream scRNA-seq analysis!
 
 There are more details here which should consider during running softwares:
 
-##### Important notes for BCL to FASTQ Conversion (Demultiplexing):
+#### Important notes for BCL to FASTQ Conversion (Demultiplexing):
 
 When using **cellranger mkfastq** (or the underlying Illumina software like bcl2fastq or BCL Convert), the most important consideration for 10x Genomics data isn't a single flag, but a critical omission and two key settings:
 
@@ -91,7 +91,7 @@ Purpose: To separate individual cells within a single sample/library.
 Where it's found: This sequence is integrated into Read 1 of the FASTQ files.
 
 How it works: This is handled by cellranger count. All the cells (columns in the matrix) in the final matrix come from the single sample (e.g., Patient A) whose FASTQ files were fed into that run of cellranger count.
-### Initial Quality Control (QC) and Filtering: Learning how to clean up the data.
+## Initial Quality Control (QC) and Filtering: Learning how to clean up the data.
 
 Data Normalization and Scaling: Making sure your cell-to-cell comparisons are fair.
 
