@@ -6,16 +6,17 @@
 The core idea of 10x Genomics is to capture thousands of individual cells and perform the sequencing preparation inside tiny oil droplets called **GEMs** (Gel Beads in Emulsion) . This process uses a specialized piece of hardware and reagents.
 The raw output from an Illumina sequencer is a set of **Binary Base Call (BCL) files**. The **Cell Ranger** software manages these BCL files through a critical initial step called **demultiplexing**. Here's how it works:
 
-1. From BCL to FASTQ
-The BCL files are the dense, raw data, containing the base call and a quality score for every single cycle of the sequencing run. They aren't directly usable by most analysis tools:
-'cellranger mkfastq': The Cell Ranger pipeline includes a function, cellranger mkfastq (which internally uses Illumina's bcl2fastq or BCL Convert software).
-
-Demultiplexing: This step does two main things:
-
-Converts: The BCL files are converted into FASTQ files. A FASTQ file is a text-based format that contains the sequence data (A, C, G, T) and their corresponding quality scores.
+**1. From BCL to FASTQ:
+The BCL files are the dense, raw data, containing the base call and a quality score for every single cycle of the sequencing run. They aren't directly usable by most analysis tools. 
 
 
-Splits (Demultiplexing): It uses the Sample Index sequences (which are different from the Cell Barcodes and are used to pool multiple samples onto one sequencer lane) to separate the mixed reads and create a distinct set of FASTQ files for each individual sample or library you ran.
+
+**Demultiplexing**: This step does two main things:
+
+1- *Converts* : The BCL files are converted into FASTQ files. A FASTQ file is a text-based format that contains the sequence data (A, C, G, T) and their corresponding quality scores.
+2- *Splits (Demultiplexing)* : It uses the Sample Index sequences (which are different from the Cell Barcodes and are used to pool multiple samples onto one sequencer lane) to separate the mixed reads and create a distinct set of FASTQ files for each individual sample or library you ran.
+
+The Cell Ranger pipeline includes a function, **cellranger mkfastq** (which internally uses Illumina's *bcl2fastq* or *BCL Convert software*)
 
 2. From FASTQ to the Count Matrix
 Once the FASTQ files are generated, the main analysis pipeline takes over:
