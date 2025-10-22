@@ -1,12 +1,12 @@
 
 ## 10x Genomics scRNA-seq ##
 
-### Understanding the 10x Genomics Workflow and Data: From Cells to Matrix###
+### Understanding the 10x Genomics Workflow and Data: From Cells to Matrix
 
 The core idea of 10x Genomics is to capture thousands of individual cells and perform the sequencing preparation inside tiny oil droplets called **GEMs** (Gel Beads in Emulsion) . This process uses a specialized piece of hardware and reagents.
 The raw output from an Illumina sequencer is a set of **Binary Base Call (BCL) files**. The **Cell Ranger** software manages these BCL files through a critical initial step called **demultiplexing**. Here's how it works:
 
-	1. From BCL to FASTQ
+1. From BCL to FASTQ
 The BCL files are the dense, raw data, containing the base call and a quality score for every single cycle of the sequencing run. They aren't directly usable by most analysis tools:
 'cellranger mkfastq': The Cell Ranger pipeline includes a function, cellranger mkfastq (which internally uses Illumina's bcl2fastq or BCL Convert software).
 
