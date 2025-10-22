@@ -17,7 +17,7 @@ To prepare them, two main things happen here:
 
 The Cell Ranger pipeline includes a function, **cellranger mkfastq** (which internally uses Illumina's *bcl2fastq* or *BCL Convert software*)
 
-#### **2. From FASTQ to the Count Matrix**
+### **2. From FASTQ to the Count Matrix**
 
 Once the FASTQ files are generated, the main analysis pipeline takes over:
 
@@ -50,9 +50,10 @@ C- *** The Values in the matrix are the UMI Counts (how many molecules of that g
 
 This matrix is the starting point for almost all downstream scRNA-seq analysis!
 
+### Important notes 
 There are more details here which should consider during running softwares:
 
-#### Important notes for BCL to FASTQ Conversion (Demultiplexing):
+##### Important notes for BCL to FASTQ Conversion (Demultiplexing):
 
 When using **cellranger mkfastq** (or the underlying Illumina software like bcl2fastq or BCL Convert), the most important consideration for 10x Genomics data isn't a single flag, but a critical omission and two key settings:
 
@@ -68,7 +69,7 @@ When using **cellranger mkfastq** (or the underlying Illumina software like bcl2
 
 The most vital "flag" is actually the Sample Sheet (CSV file) you provide to mkfastq. This sheet is where you link the physical lane and sequencing index sequence to a Sample ID (e.g., "Patient_A" or "Treated_Sample"). This Sample ID is what Cell Ranger uses to name and organize your final files
 
-#### Separating Cells vs. Separating Samples
+##### Separating Cells vs. Separating Samples
 
 This is a brilliant distinction you've made! You are correct that the columns in the Gene-Barcode Matrix are Cell Barcodes, which are related to individual cells. However, they are NOT related to the Sample ID (e.g., Patient A vs. Patient B) unless you have multiplexed your samples.
 
