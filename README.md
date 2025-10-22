@@ -6,13 +6,10 @@
 The core idea of 10x Genomics is to capture thousands of individual cells and perform the sequencing preparation inside tiny oil droplets called **GEMs** (Gel Beads in Emulsion) . This process uses a specialized piece of hardware and reagents.
 The raw output from an Illumina sequencer is a set of **Binary Base Call (BCL) files**. The **Cell Ranger** software manages these BCL files through a critical initial step called **demultiplexing**. Here's how it works:
 
-**1. From BCL to FASTQ**:
+**1. From BCL to FASTQ (Demultiplexing)**:
 
-The BCL files are the dense, raw data, containing the base call and a quality score for every single cycle of the sequencing run. They aren't directly usable by most analysis tools. 
-
-
-
-**Demultiplexing**: This step does two main things:
+The BCL files are the dense, raw data, containing the base call and a quality score for every single cycle of the sequencing run. They aren't directly usable by most analysis tools.  
+To prepare them, two main things happen here:
 
 1- *Converts* : The BCL files are converted into FASTQ files. A FASTQ file is a text-based format that contains the sequence data (A, C, G, T) and their corresponding quality scores.
 2- *Splits (Demultiplexing)* : It uses the Sample Index sequences (which are different from the Cell Barcodes and are used to pool multiple samples onto one sequencer lane) to separate the mixed reads and create a distinct set of FASTQ files for each individual sample or library you ran.
