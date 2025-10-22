@@ -79,11 +79,15 @@ The columns in the Gene-Barcode Matrix are Cell Barcodes, which are related to i
 
 **2- The Cell Barcode (Internal/10x Barcode)**
 
-*Purpose*: To separate individual cells within a single sample/library. 
+*Purpose*: To separate individual cells within a single sample/library. *Where it's found*: This sequence is integrated into Read 1 of the FASTQ files. *How it works*: This is handled by cellranger count. All the cells (columns in the matrix) in the final matrix come from the single sample (e.g., Patient A) whose FASTQ files were fed into that run of cellranger count.
 
-Where it's found: This sequence is integrated into Read 1 of the FASTQ files.
+#### sample codes 
 
-How it works: This is handled by cellranger count. All the cells (columns in the matrix) in the final matrix come from the single sample (e.g., Patient A) whose FASTQ files were fed into that run of cellranger count.
+
+##### R
+
+##### Python
+
 ## Initial Quality Control (QC) and Filtering: Learning how to clean up the data.
 
 Data Normalization and Scaling: Making sure your cell-to-cell comparisons are fair.
