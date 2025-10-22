@@ -1,5 +1,5 @@
 
-##10x Genomics scRNA-seq##
+## 10x Genomics scRNA-seq ##
 
 ### Understanding the 10x Genomics Workflow and Data: From Cells to Matrix###
 
@@ -44,11 +44,9 @@ The **UMI** is like a serial number for a specific RNA molecule within a cell. I
 
 After sequencing, the proprietary 10x software, **Cell Ranger**, takes the raw data, uses the **Barcodes** to group reads by cell and the UMIs to count the original molecules, and produces the final output: the Gene-Barcode Matrix. This is a massive spreadsheet where:
 
-	*** Rows are the Genes (e.g., Sox2, CD14).
-
-	*** Columns are the Cells (identified by their Barcodes).
-
-	*** The Values in the matrix are the UMI Counts (how many molecules of that gene were detected in that cell).
+A-*** Rows are the Genes (e.g., Sox2, CD14).
+B-*** Columns are the Cells (identified by their Barcodes).
+C-*** The Values in the matrix are the UMI Counts (how many molecules of that gene were detected in that cell).
 
 Let`s` go dipper to the process!  tart with the 
 This matrix is the starting point for almost all downstream scRNA-seq analysis!
