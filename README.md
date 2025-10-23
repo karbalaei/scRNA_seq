@@ -153,7 +153,7 @@ Then run this command in bash:
 
 	echo "mkfastq completed. FASTQ files for S1-S10 are now in the $OUTPUT_FASTQS folder."
 
-You can either save this script in a file with*.sh* extension and run it by :
+You can either save this script in a file with <mark> .sh* </mark> extension and run it by :
 	sh file.sh
 
 or run this script line by line by type or copy+paste of it.
