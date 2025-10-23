@@ -93,7 +93,9 @@ The columns in the Gene-Barcode Matrix are Cell Barcodes, which are related to i
 
 *How it works*: This is handled by *cellranger count*. All the cells (columns in the matrix) in the final matrix come from the single sample (e.g., Patient A) whose FASTQ files were fed into that run of cellranger count.
 
-
+|Index Type|Role|Software Step|Result in Matrix|
+Sample Index,Separates pooled libraries/samples.,cellranger mkfastq,"Determines which matrix file is created (e.g., Patient_A_matrix.h5)."
+Cell Barcode,Separates cells within a library.,cellranger count,Forms the columns of the matrix (the individual cells).
 
 #### **Sample codes** 
 
