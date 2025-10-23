@@ -110,7 +110,7 @@ Suppose you have 10 samples (let's call them S1 through S10) that were likely po
 
 Here is a toy example script, written in a standard shell (.sh) format, assuming you have a BCL run folder and a reference transcriptome ready.
 
-Step-1 : *Generating FASTQ Files* (<mark>cellranger mkfastq</mark>)
+##### Step-1 : *Generating FASTQ Files* (<mark>cellranger mkfastq</mark>)
 
 This step reads the BCL files and uses the Sample Index to create separate FASTQ files for each of your 10 samples.
 
@@ -153,7 +153,8 @@ Then run this command in bash:
 
 	echo "mkfastq completed. FASTQ files for S1-S10 are now in the $OUTPUT_FASTQS folder."
 
-You can either save this script in a file with <mark> .sh* </mark> extension and run it by :
+You can either save this script in a file with <mark> .sh </mark> extension and run it by :
+
 	sh file.sh
 
 or run this script line by line by type or copy+paste of it.
@@ -167,11 +168,64 @@ or run this script line by line by type or copy+paste of it.
 - *--csv*: Points to the Sample Sheet that defines your 10 samples and their indices.
 
 - *--localcores / --localmem*: These are vital for efficiency—they tell the program how many CPU cores and how much RAM to use.
-##### **R**
 
-##### **Python**
+##### Step 2: Generating Gene-Barcode Matrices (<mark> cellranger count</mark>):
 
-## Initial Quality Control (QC) and Filtering: Learning how to clean up the data.
+After Step 1, you'll have 10 separate sets of FASTQ files (one set per sample) inside your fastqs_output directory. Now, you need to run cellranger count ten times—once for each sample.
+
+**Pre-requisite**: You need a Reference Transcriptome (e.g., a human or mouse genome bundle downloaded from 10x Genomics).
+
+The Script (using a loop for all 10 samples), which should run in bash, as menioned above:
+
+	#!/bin/bash
+	# Script: 02_count_matrices.sh
+
+	# --- Configuration ---
+	# Path to the 10x Genomics Reference Transcriptome
+	REFERENCE="/path/to/10x/refdata/human/GRCh38-2020-A"
+
+	# The directory containing the FASTQ files (output from mkfastq)
+	FASTQ_DIR="fastqs_output"
+
+	# List of your 10 Sample IDs
+	SAMPLES=(S1 S2 S3 S4 S5 S6 S7 S8 S9 S10)
+	# ---------------------
+
+	for SAMPLE_ID in "${SAMPLES[@]}"
+	do
+		echo "Starting cellranger count for sample: $SAMPLE_ID"
+		
+		cellranger count \
+			--id="${SAMPLE_ID}_analysis" \
+			--transcriptome=$REFERENCE \
+			--fastqs=$FASTQ_DIR \
+			--sample=$SAMPLE_ID \
+			--localcores=8 \
+			--localmem=64
+			
+		echo "Count completed for $SAMPLE_ID"
+		echo "Output matrix is in ${SAMPLE_ID}_analysis/outs/filtered_feature_bc_matrix.h5"
+	done
+
+	echo "All 10 samples have been processed!"
+	
+
+Key flags explained:
+
+- *--id:* The name of the final output folder for this analysis.
+
+- *--transcriptome:* Tells Cell Ranger where the reference genome information is.
+
+- *--fastqs:* Points to the folder containing ALL the FASTQ files (Cell Ranger automatically finds the ones for the specific sample ID).
+
+- *--sample:* Crucial! This tells the pipeline which specific set of FASTQ files (e.g., the ones prefixed with S1) to use from the FASTQ directory.
+
+This will leave you with 10 separate output folders, each containing a Gene-Barcode Matrix (in the .h5 format) ready for the next steps!
+
+
+
+
+## Initial Quality Control (QC) and Filtering: Learning how to clean up the data (under preparation!).
 
 Data Normalization and Scaling: Making sure your cell-to-cell comparisons are fair.
 
@@ -182,3 +236,7 @@ Cell Clustering and Visualization: Grouping cells to find different types.
 Identifying Marker Genes and Cell Type Annotation: Putting names to the cell groups you found.
 
 
+##### **R**
+
+
+##### **Python**
