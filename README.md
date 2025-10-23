@@ -95,8 +95,10 @@ The columns in the Gene-Barcode Matrix are Cell Barcodes, which are related to i
 
 |Index Type|Role|Software Step|Result in Matrix|
 |---|---|---|---|
-|Sample Index|Separates pooled libraries/samples.|cellranger mkfastq|"Determines which matrix file is created (e.g., Patient_A_matrix.h5)."|
-|Cell Barcode|Separates cells within a library.|cellranger count|Forms the columns of the matrix (the individual cells).|
+|Sample Index|Separates pooled libraries/samples.|<cellranger mkfastq>|Determines which matrix file is created (e.g., Patient_A_matrix.h5).|
+|Cell Barcode|Separates cells within a library.|<cellranger count>|Forms the columns of the matrix (the individual cells).|
+
+This means that if you run a single sample, all the barcodes in its resulting matrix belong to that single sample. If you had multiplexed your samples (e.g., using a Cell-Plex kit), you would use the cellranger multi pipeline, which introduces a whole new layer of sample-specific feature barcodes to figure out which cell came from which patient after the initial demultiplexing!
 
 #### **Sample codes** 
 
