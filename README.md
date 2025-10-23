@@ -102,8 +102,29 @@ This means that if you run a single sample, all the barcodes in its resulting ma
 
 #### **Sample codes** 
 
+Suppose you have 10 samples (let's call them S1 through S10) that were likely pooled and run on the sequencer, the process involves two main Cell Ranger steps:
 
+**Demultiplexing**: <mark> cellranger mkfastq </mark> to split the raw data by sample index.
 
+**Counting**: <mark> cellranger count </mark> to generate the matrix for each sample.
+
+Here is a toy example script, written in a standard shell (.sh) format, assuming you have a BCL run folder and a reference transcriptome ready.
+
+Step-1 : *Generating FASTQ Files* (<mark>cellranger mkfastq</mark>)
+
+This step reads the BCL files and uses the Sample Index to create separate FASTQ files for each of your 10 samples.
+
+*Pre-requisite*: You need a Sample Sheet (e.g., ten_sample_sheet.csv) that tells Cell Ranger which index corresponds to which sample ID.
+
+	[Header]
+	...
+	[Data]
+	Lane,Sample_ID,index,index2
+	1,S1,SI-TT-A1,
+	1,S2,SI-TT-B1,
+	2,S3,SI-TT-C1,
+	...
+	4,S10,SI-TT-J1,
 
 ##### **R**
 
