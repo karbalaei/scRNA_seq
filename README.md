@@ -152,6 +152,21 @@ Then run this command in bash:
 		--localmem=100
 
 	echo "mkfastq completed. FASTQ files for S1-S10 are now in the $OUTPUT_FASTQS folder."
+
+You can either save this script in a file with*.sh* extension and run it by :
+	sh file.sh
+
+or run this script line by line by type or copy+paste of it.
+
+**Key flags explained:**
+
+- *--run*: Tells Cell Ranger where the raw BCL data is located.
+
+- *--output-dir*: Specifies where to save the resulting FASTQ files.
+
+- *--csv*: Points to the Sample Sheet that defines your 10 samples and their indices.
+
+- *--localcores / --localmem*: These are vital for efficiency—they tell the program how many CPU cores and how much RAM to use.
 ##### **R**
 
 ##### **Python**
